@@ -1,4 +1,3 @@
-import functions as u
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -7,14 +6,17 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+import functions as u
+from translation import tr as _, lang
+
 
 class Ui_MainWindow(QMainWindow):
     significance_level = 0.05
     difference_umbral = 0.01
     save_folder = None
     column = -1
-    prueba = 'ad'
-    criterio = 'aic'
+    test = _[lang]['average']
+    criteria = 'aic'
     files, logs = [], []
 
     def setupUi(self, MainWindow):
@@ -43,7 +45,7 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.pushButton_3 = QPushButton(self.verticalLayoutWidget_2)
         self.pushButton_3.setIcon(self.style().standardIcon(
-                                                          getattr(QStyle, 'SP_FileDialogInfoView')))
+            getattr(QStyle, 'SP_FileDialogInfoView')))
         self.pushButton_3.setMaximumSize(QSize(20, 16777215))
         self.pushButton_3.setLayoutDirection(Qt.RightToLeft)
         self.pushButton_3.setObjectName("pushButton_3")
@@ -61,7 +63,7 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton.setLayoutDirection(Qt.RightToLeft)
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setIcon(self.style().standardIcon(
-                                                         getattr(QStyle, 'SP_DialogDiscardButton')))
+            getattr(QStyle, 'SP_DialogDiscardButton')))
         self.horizontalLayout_2.addWidget(self.pushButton)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.listView = QListView(self.verticalLayoutWidget_2)
@@ -92,23 +94,23 @@ class Ui_MainWindow(QMainWindow):
         self.actionConfigurar = QAction(MainWindow)
         self.actionConfigurar.setObjectName("actionConfigurar")
         self.actionConfigurar.setIcon(self.style().standardIcon(
-                                                        getattr(QStyle, 'SP_TitleBarNormalButton')))
+            getattr(QStyle, 'SP_TitleBarNormalButton')))
         self.actionAbout = QAction(MainWindow)
         self.actionAbout.setObjectName("actionAbout")
         self.actionAbout.setIcon(self.style().standardIcon(
-                                                          getattr(QStyle, 'SP_MessageBoxQuestion')))
+            getattr(QStyle, 'SP_MessageBoxQuestion')))
         self.actionSalir = QAction(MainWindow)
         self.actionSalir.setObjectName("actionSalir")
         self.actionSalir.setIcon(self.style().standardIcon(getattr(QStyle, 'SP_DialogOkButton')))
 
         self.actionAdicionar_Fichero = QAction(MainWindow)
         self.actionAdicionar_Fichero.setIcon(self.style().standardIcon(
-                                                                getattr(QStyle, 'SP_FileLinkIcon')))
+            getattr(QStyle, 'SP_FileLinkIcon')))
         self.actionAdicionar_Fichero.setObjectName("actionAdicionar_Fichero")
 
         self.actionGenerar_datos = QAction(MainWindow)
         self.actionGenerar_datos.setIcon(self.style().standardIcon(
-                                                           getattr(QStyle, 'SP_DialogApplyButton')))
+            getattr(QStyle, 'SP_DialogApplyButton')))
         self.actionGenerar_datos.setObjectName("actionGenerar_datos")
         self.menuInicio.addAction(self.actionAdicionar_Fichero)
         self.menuInicio.addAction(self.actionGenerar_datos)
@@ -131,8 +133,8 @@ class Ui_MainWindow(QMainWindow):
 
         self.pushButton.setDisabled(True)
         self.pushButton_3.setDisabled(True)
-        self.pushButton.setToolTip('Eliminar fichero')
-        self.pushButton_2.setToolTip('Adicionar ficheros')
+        self.pushButton.setToolTip(_[lang]['delete_file'])
+        self.pushButton_2.setToolTip(_[lang]['add_files'])
         self.tableView.verticalHeader().hide()
         self.tableView.horizontalHeader().hide()
         self.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
@@ -159,17 +161,17 @@ class Ui_MainWindow(QMainWindow):
 
     def myListWidgetContext(self, position):
         popMenu = QMenu()
-        add_action = QAction("Adicionar ficheros", self)
+        add_action = QAction(_[lang]['add_files'], self)
         add_action.setIcon(self.style().standardIcon(getattr(QStyle, 'SP_FileLinkIcon')))
         popMenu.addAction(add_action)
         if self.listView.selectionModel() is not None and \
                 len(self.listView.selectionModel().selectedRows()) > 0:
-            info_action = QAction("Detalles", self)
+            info_action = QAction(_[lang]['details'], self)
             info_action.setIcon(self.style().standardIcon(getattr(QStyle, 'SP_FileDialogInfoView')))
             popMenu.addAction(info_action)
             info_action.triggered.connect(self.functionDetails)
 
-            graphic = QAction("Ver gráfica", self)
+            graphic = QAction(_[lang]['see_graph'], self)
             graphic.setIcon(self.style().standardIcon(getattr(QStyle, 'SP_FileDialogListView')))
             popMenu.addAction(graphic)
             graphic.triggered.connect(self.show_Grafica)
@@ -200,35 +202,24 @@ class Ui_MainWindow(QMainWindow):
         plt.show()
 
     def retranslateUi(self, MainWindow):
-        _translate = QCoreApplication.translate
-        MainWindow.setWindowTitle(
-            _translate("MainWindow", "Generador de datos artificiales (Statistical Density "
-                                     "Oversampling)"))
-        self.pushButton_3.setToolTip(_translate("MainWindow", "Detalles"))
-        self.menuInicio.setTitle(_translate("MainWindow", "Menú"))
-        self.actionConfigurar.setText(_translate("MainWindow", "Configurar"))
-        self.actionAbout.setText(_translate("MainWindow", "Acerca de"))
-        self.actionSalir.setText(_translate("MainWindow", "Salir"))
+        MainWindow.setWindowTitle(_[lang]['app_name'])
+        self.pushButton_3.setToolTip(_[lang]['details'])
+        self.menuInicio.setTitle(_[lang]['menu'])
+        self.actionConfigurar.setText(_[lang]['configure'])
+        self.actionAbout.setText(_[lang]['about'])
+        self.actionSalir.setText(_[lang]['exit'])
 
-        self.actionAdicionar_Fichero.setText(_translate("MainWindow", "Adicionar ficheros"))
-        self.actionGenerar_datos.setText(_translate("MainWindow", "Generar datos"))
+        self.actionAdicionar_Fichero.setText(_[lang]['add_files'])
+        self.actionGenerar_datos.setText(_[lang]['generate_data'])
 
     def functionAbout(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
-        msg.setText("Este sistema constituye un resultado del tema de investigación: '{0}' de los "
-                    "autores:\n{1}".format("GENERACIÓN DE DATOS ARTIFICIALES EN PROBLEMAS "
-                                           "DECLASIFICACIÓN CON CLASES "
-                                           "NO BALANCEADAS",
-                                           "- Ing. Yordan E. Estrada Rodriguez\n - Dr. Luis C "
-                                           "Méndez "
-                                           "González\n - Dr. Vicente García Jiménez"))
-        msg.setWindowTitle("Acerca de")
+        msg.setText(_[lang]['about_text'])
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
 
     def functionGenerarDatos(self):
-
         if self.save_folder is None:
             dialog = QFileDialog(self)
             dialog.setFileMode(QFileDialog.DirectoryOnly)
@@ -244,19 +235,21 @@ class Ui_MainWindow(QMainWindow):
             fdata = u.load_data(model.index(i).data())
             fixed_data, data_type, round_to = u.rows_to_columns(fdata[fdata['min']])
             generated_data = u.generateData(fixed_data, data_type, fdata, self.difference_umbral,
-                                            self.prueba, self.criterio)
-            result = u.save_data(self.save_folder +'/SDO_'+ os.path.basename(model.index(i).data()),
-                                 generated_data,
-                                 data_type,
-                                 round_to,
-                                 fdata['all'],
-                                 fdata['min_col'])
-        text = "Datos almacenados correctamente" if result else "Error al almacenar los datos"
+                                            self.test, self.criteria)
+            result = u.save_data(
+                self.save_folder + '/SDO_' + os.path.basename(model.index(i).data()),
+                generated_data,
+                data_type,
+                round_to,
+                fdata['all'],
+                fdata['min_col'])
+        text = _[lang]['data_stored_correctly'] if result else _[lang][
+            'error_storing_the_data']
         self.lbl.hide()
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         msg.setText(text)
-        msg.setWindowTitle("Información")
+        msg.setWindowTitle(_[lang]['information'])
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
 
@@ -272,13 +265,13 @@ class Ui_MainWindow(QMainWindow):
     def functionDetails(self):
         self.lbl.show()
         name = self.listView.selectionModel().selectedRows()[0].data()
-        DetailDialog.getDetail(name, self.lbl, self.prueba, self.criterio)
+        DetailDialog.getDetail(name, self.lbl, self.test, self.criteria)
 
     def functionConfigurar(self):
         self.difference_umbral, self.significance_level, self.save_folder, self.column, \
-        self.prueba, self.criterio,  ok = ConfigDialog.getConfig(
+        self.test, self.criteria, ok = ConfigDialog.getConfig(
             self.significance_level, self.difference_umbral, self.save_folder, self.column,
-            self.prueba, self.criterio)
+            self.test, self.criteria)
 
     def functionAdicionar(self):
         self.openFileNameDialog()
@@ -295,7 +288,7 @@ class Ui_MainWindow(QMainWindow):
         else:
             self.listView.setCurrentIndex(self.listView.model().index(len(self.files) - 1, 0))
             self.loadData(self.files[len(self.files) - 1])
-        self.functionLog('Eliminado fichero: {}'.format(name))
+        self.functionLog(_[lang]['file_deleted'].format(name))
 
     def functionLog(self, text):
         self.logs.append(text)
@@ -307,7 +300,7 @@ class Ui_MainWindow(QMainWindow):
         self.listView.setToolTip(self.files[index.row()])
         self.pushButton.setDisabled(False)
         self.pushButton_3.setDisabled(False)
-        self.functionLog('Fichero seleccionado: {}'.format(self.files[index.row()]))
+        self.functionLog(_[lang]['file_selected'].format(self.files[index.row()]))
 
     def loadData(self, fileName=None):
         self.dataModel.clear()
@@ -324,13 +317,14 @@ class Ui_MainWindow(QMainWindow):
         txt_msg = ""
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileNames = QFileDialog.getOpenFileNames(self, "Adicionar ficheros", "",
-                                                 "Comma-Separated Files (*.csv)", options=options)[0]
+        fileNames = QFileDialog.getOpenFileNames(self, _[lang]['add_files'], "",
+                                                 _[lang]['comma_separated_files'],
+                                                 options=options)[0]
         if len(fileNames) > 0:
             for j in fileNames:
                 if j not in self.files:
                     self.files.append(j)
-                    self.functionLog('Ficheros adicionados: {}'.format(j))
+                    self.functionLog(_[lang]['files_added'].format(j))
                 else:
                     txt_msg += " - {0}\n".format(j)
         else:
@@ -339,8 +333,8 @@ class Ui_MainWindow(QMainWindow):
         if txt_msg != "":
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            msg.setText("Los siguientes ficheros ya ha sido cargados:\n" + txt_msg)
-            msg.setWindowTitle("Información")
+            msg.setText(_[lang]['files_has_been_created'] + txt_msg)
+            msg.setWindowTitle(_[lang]['information'])
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
 
@@ -354,10 +348,10 @@ class Ui_MainWindow(QMainWindow):
 
 
 class ConfigDialog(QDialog):
-    def __init__(self, significance_level, umbral, save_f=None, col=-1, prueba='ad', criterio='aic',
+    def __init__(self, significance_level, threshold, save_f=None, col=-1, test=_[lang]['average'], criteria='aic',
                  parent=None):
         super(ConfigDialog, self).__init__(parent)
-        self.setWindowTitle('Configurar')
+        self.setWindowTitle(_[lang]['configure'])
         self.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowTitleHint)
         self.setFixedWidth(350)
 
@@ -365,55 +359,59 @@ class ConfigDialog(QDialog):
 
         self.umbral_label = QLabel(self)
         self.umbral_label.setObjectName("label")
-        self.umbral_label.setText('Umbral:')
+        self.umbral_label.setText(_[lang]['threshold'])
 
         self.umbral = QDoubleSpinBox(self)
-        self.umbral.setValue(umbral)
+        self.umbral.setValue(threshold)
 
         # ==============Prueba a usar============================
         hboxt = QHBoxLayout()
-        groupboxt = QGroupBox("Prueba a usar:", checkable=False)
+        groupboxt = QGroupBox(_[lang]['test_to_use'], checkable=False)
         groupboxt.setLayout(hboxt)
 
         self.ad = QRadioButton("Ad")
-        if prueba == 'ad': self.ad.setChecked(True)
+        if test == 'ad': self.ad.setChecked(True)
         self.ad.setToolTip("Anderson-Darling")
         self.ks = QRadioButton("Ks")
-        if prueba == 'ks': self.ks.setChecked(True)
+        if test == 'ks': self.ks.setChecked(True)
         self.ks.setToolTip("Kolmogorov-Smirnov")
         self.cvm = QRadioButton("Cvm")
-        if prueba == 'cvm': self.cvm.setChecked(True)
+        if test == 'cvm': self.cvm.setChecked(True)
         self.cvm.setToolTip("Cramer-von-Mises")
+        self.average = QRadioButton(_[lang]['average'])
+        if test == _[lang]['average']: self.average.setChecked(True)
+        self.average.setToolTip(_[lang]['average'])
 
         hboxt.addWidget(self.ad, alignment=Qt.AlignTop)
         hboxt.addWidget(self.ks, alignment=Qt.AlignTop)
         hboxt.addWidget(self.cvm, alignment=Qt.AlignTop)
+        hboxt.addWidget(self.average, alignment=Qt.AlignTop)
 
         # ==============Criterio de selección =======================
         hboxc = QHBoxLayout()
-        groupboxc = QGroupBox("Criterio de selección:", checkable=False)
+        groupboxc = QGroupBox(_[lang]['selection_criteria'], checkable=False)
         groupboxc.setLayout(hboxc)
 
         self.aic = QRadioButton("aic")
-        if criterio == 'aic': self.aic.setChecked(True)
-        self.aic.setToolTip("Criterio de Akaike")
+        if criteria == 'aic': self.aic.setChecked(True)
+        self.aic.setToolTip(_[lang]['akaike_criteria'])
         self.bic = QRadioButton("bic")
-        if criterio == 'bic': self.bic.setChecked(True)
-        self.bic.setToolTip("Criterio de Información Bayesiano")
+        if criteria == 'bic': self.bic.setChecked(True)
+        self.bic.setToolTip(_[lang]['bayesian_criteria'])
 
         hboxc.addWidget(self.aic, alignment=Qt.AlignTop)
         hboxc.addWidget(self.bic, alignment=Qt.AlignTop)
 
         self.sl_label = QLabel(self)
         self.sl_label.setObjectName("label1")
-        self.sl_label.setText('Nivel de significancia:')
+        self.sl_label.setText(_[lang]['significance_level'])
 
         self.s_level = QDoubleSpinBox(self)
         self.s_level.setValue(significance_level)
 
         self.column_label = QLabel(self)
         self.column_label.setObjectName("label2")
-        self.column_label.setText('Columna:')
+        self.column_label.setText(_[lang]['column'])
 
         self.column = QSpinBox(self)
         self.column.setMaximum(10)
@@ -422,7 +420,7 @@ class ConfigDialog(QDialog):
 
         self.savef_label = QLabel(self)
         self.savef_label.setObjectName("label2")
-        self.savef_label.setText('Almacenar resultados en:')
+        self.savef_label.setText(_[lang]['store_results_in'])
 
         self.holayout = QHBoxLayout(self)
         self.savef = QLineEdit(self)
@@ -459,7 +457,8 @@ class ConfigDialog(QDialog):
     def getPrueba(self):
         if self.cvm.isChecked(): return 'cvm'
         if self.ks.isChecked(): return 'ks'
-        return 'ad'
+        if self.ad.isChecked(): return 'ad'
+        return _[lang]['average']
 
     def getCriterio(self):
         if self.bic.isChecked(): return 'bic'
@@ -486,7 +485,7 @@ class ConfigDialog(QDialog):
 
     @staticmethod
     def getConfig(significance_level, umbral, savef, col, prueba, criterio, parent=None):
-        dialog = ConfigDialog(significance_level, umbral, savef, col, prueba, criterio,  parent)
+        dialog = ConfigDialog(significance_level, umbral, savef, col, prueba, criterio, parent)
         result = dialog.exec_()
         um = dialog.um()
         sl = dialog.sl()
@@ -494,26 +493,26 @@ class ConfigDialog(QDialog):
         col = dialog.col()
         test = dialog.getPrueba()
         crit = dialog.getCriterio()
-        return um, sl, sf, col, test, crit,  result == QDialog.Accepted
+        return um, sl, sf, col, test, crit, result == QDialog.Accepted
 
 
 class DetailDialog(QDialog):
     dialogShown = pyqtSignal()
     file = None
     difference_umbral = None
-    prueba = None
-    criterio = None
+    test = None
+    criteria = None
 
-    def __init__(self, file=None, lbl=None, parent=None, prueba='ad', criterio='aic',
+    def __init__(self, file=None, lbl=None, parent=None, test='all', criteria='aic',
                  difference_umbral=0.01):
         super(DetailDialog, self).__init__(parent)
         self.file = file
         self.lbl_dialog = lbl
         self.difference_umbral = difference_umbral
-        self.prueba = prueba
-        self.criterio = criterio
+        self.test = test
+        self.criteria = criteria
 
-        self.setWindowTitle('Detalles del fichero {}'.format(os.path.basename(file)))
+        self.setWindowTitle(_[lang]['file_details'].format(os.path.basename(file)))
         self.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowTitleHint)
         self.resize(800, 450)
 
@@ -536,8 +535,8 @@ class DetailDialog(QDialog):
 
         self.tableView.verticalHeader().hide()
 
-        self.label.setText('Distribuciones por columnas de la clase minoritaria:')
-        self.label_2.setText('Detalles:')
+        self.label.setText(_[lang]['column_distribution_by_column'])
+        self.label_2.setText(_[lang]['details'])
 
         self.dialogShown.connect(self.handleDialogShown)
 
@@ -562,7 +561,7 @@ class DetailDialog(QDialog):
         fdata = u.load_data(filename)
         fixed_data, data_type, round = u.rows_to_columns(fdata[fdata['min']])
         selected_distribution = u.getDistributionInfo(fixed_data, data_type, self.difference_umbral,
-                                                      self.prueba, self.criterio)
+                                                      self.test, self.criteria)
 
         distributionModel = QStandardItemModel(0, 0, self)
         listModel = QStringListModel(self)
@@ -572,26 +571,27 @@ class DetailDialog(QDialog):
         self.tableView.setModel(distributionModel)
         self.listView.setModel(listModel)
 
-        lista = [
-            'Fichero: {}'.format(filename),
-            'Total de registros: {} '.format(len(fdata['a']) + len(fdata['b'])),
-            'Total de columnas: {}'.format(len(fdata['a'][0])),
-            'Prueba: {}'.format(self.prueba),
-            'Criterio de selección: {}'.format(self.criterio),
-            'Clase mayoritaria contiene {} elementos'.format(len(fdata[fdata['max']])),
-            'Clase minoritaria contiene {} elementos'.format(len(fdata[fdata['min']])),
+        listed = [
+            _[lang]['file'].format(filename),
+            _[lang]['total_registry'].format(len(fdata['a']) + len(fdata['b'])),
+            _[lang]['total_columns'].format(len(fdata['a'][0])),
+            _[lang]['test'].format(self.test),
+            _[lang]['selection_criteria'].format(self.criteria),
+            _[lang]['majority_class_contains'].format(len(fdata[fdata['max']])),
+            _[lang]['minority_class_contains'].format(len(fdata[fdata['min']])),
         ]
-        listModel.setStringList(lista)
+        listModel.setStringList(listed)
 
     @staticmethod
-    def getDetail(file, lbl, prueba, criterio, parent=None):
-        dialog = DetailDialog(file, lbl, parent, prueba, criterio)
+    def getDetail(file, lbl, test, criteria, parent=None):
+        dialog = DetailDialog(file, lbl, parent, test, criteria)
         result = dialog.exec_()
         return result == QDialog.Accepted
 
 
 if __name__ == "__main__":
     import sys
+
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
     ui = Ui_MainWindow()

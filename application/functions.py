@@ -1,11 +1,11 @@
-import arff
-import csv
+import arff, csv
 import statistics as stats
 from csv import reader
 import numpy as np
 import rpy2.robjects as R
 import rpy2.robjects.packages as R_packages
 from rpy2.robjects import DataFrame
+from translation import tr as _, lang
 
 R.r['options'](warn=-1)
 
@@ -190,7 +190,7 @@ def gofstat(fit_dist_result, distribution, args):
 # @param difference_umbral: umbral de diferencia
 # @param test: prueba que se debe usar (ad,ks,cvm)
 # @param check_test: criterio de a utilizar (aic, bic)
-def selectAIC(values, difference_umbral=0.01, test='ad', check_test='aic'):
+def selectAIC(values, difference_umbral=0.01, test='all', check_test='aic'):
     try:
         minor_val = None
         # Por cada resultado de pruebas para cada distribución
@@ -202,6 +202,11 @@ def selectAIC(values, difference_umbral=0.01, test='ad', check_test='aic'):
             if minor_val is None:
                 minor_val = {'ad': ad, 'ks': ks, 'cvm': cvm, 'aic': aic,
                              'bic': bic, 'dist': v[1], 'args': v[2]}
+            elif test == _[lang]['average']:
+                if ad + ks + cvm < minor_val['ad'] + minor_val['ks'] + minor_val['cvm']:
+                    minor_val = {'ad': ad, 'ks': ks, 'cvm': cvm, 'aic': aic,
+                                 'bic': bic, 'dist': v[1], 'args': v[2]}
+
             # si existe alguno con iguales de resultados
             elif abs(locals()[test] - minor_val[test]) < difference_umbral:
                 # se valida segun el criterio seleccionado
@@ -223,7 +228,7 @@ def selectAIC(values, difference_umbral=0.01, test='ad', check_test='aic'):
 # @param difference_umbral: umbral de diferencia
 # @param prueba: prueba que se debe usar (ad,ks,cvm)
 # @param check_test: criterio de a utilizar (aic, bic)
-def getDistributionInfo(fixed_data, data_type, difference_umbral, prueba, criterio):
+def getDistributionInfo(fixed_data, data_type, difference_umbral, test, criteria):
     selected_values = []
 
     # Por cada lista de numeros en la columna
@@ -250,7 +255,7 @@ def getDistributionInfo(fixed_data, data_type, difference_umbral, prueba, criter
         repeated = vector[0] if len([e for e in vector if e == vector[0]]) == len(vector) else None
 
         if repeated is None:
-            selected = selectAIC(values, difference_umbral, prueba, criterio)
+            selected = selectAIC(values, difference_umbral, test, criteria)
             selected_values.append(selected)
 
     return selected_values
