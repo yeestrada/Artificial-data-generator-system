@@ -8,6 +8,7 @@ The artificial data generator system is a result of the research topic: "GENERAT
 	- Msc. Yordan E. Estrada Rodriguez
 	- Dr. Luis C Méndez González
 	- Dr. Vicente García Jiménez
+	- Dr. Ivan Juan Carlos Pérez Olguín
 
 
 

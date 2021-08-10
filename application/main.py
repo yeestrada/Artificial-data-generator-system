@@ -22,6 +22,7 @@ class Ui_MainWindow(QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(858, 599)
+        MainWindow.setWindowIcon(QIcon("img/app.png"))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
@@ -133,8 +134,7 @@ class Ui_MainWindow(QMainWindow):
 
         self.pushButton.setDisabled(True)
         self.pushButton_3.setDisabled(True)
-        self.pushButton.setToolTip(_[lang]['delete_file'])
-        self.pushButton_2.setToolTip(_[lang]['add_files'])
+
         self.tableView.verticalHeader().hide()
         self.tableView.horizontalHeader().hide()
         self.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
@@ -209,11 +209,17 @@ class Ui_MainWindow(QMainWindow):
         self.actionAbout.setText(_[lang]['about'])
         self.actionSalir.setText(_[lang]['exit'])
 
+        self.pushButton.setToolTip(_[lang]['delete_file'])
+        self.pushButton_2.setToolTip(_[lang]['add_files'])
+
         self.actionAdicionar_Fichero.setText(_[lang]['add_files'])
         self.actionGenerar_datos.setText(_[lang]['generate_data'])
 
+
     def functionAbout(self):
         msg = QMessageBox()
+        msg.setWindowTitle(_[lang]['about'])
+        msg.setWindowIcon(QIcon("img/app.png"))
         msg.setIcon(QMessageBox.Information)
         msg.setText(_[lang]['about_text'])
         msg.setStandardButtons(QMessageBox.Ok)
@@ -576,7 +582,7 @@ class DetailDialog(QDialog):
             _[lang]['total_registry'].format(len(fdata['a']) + len(fdata['b'])),
             _[lang]['total_columns'].format(len(fdata['a'][0])),
             _[lang]['test'].format(self.test),
-            _[lang]['selection_criteria'].format(self.criteria),
+            _[lang]['selection_criteria1'].format(self.criteria),
             _[lang]['majority_class_contains'].format(len(fdata[fdata['max']])),
             _[lang]['minority_class_contains'].format(len(fdata[fdata['min']])),
         ]
