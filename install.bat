@@ -46,7 +46,7 @@ ECHO MOVIENDO CLASES DEL SISTEMA
 if exist %install_folder% ( 
 	del %install_folder%\*.*    
 )else ( mkdir %install_folder%)
-xcopy application %install_folder% /s /c /k /y /I
+xcopy application %install_folder% /s /i
 
 ECHO CREANDO FICHERO EJECUTABLE
 SETLOCAL
