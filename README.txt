@@ -1,14 +1,29 @@
-*******************Acerca de*******************
-El sistema generador de datos artificiales constituye un resultado del tema de investigación: "GENERACIÓN DE DATOS ARTIFICIALES EN PROBLEMAS DE CLASIFICACIÓN CON CLASES NO BALANCEADAS", el cual se encarga de la generación de datos para problemas de clases no balanceadas haciendo uso del algorítmo Sobremuestreo de densidad estadística propuesto en la investigación referenciada.
-
-*******************About*******************
-The artificial data generator system is a result of the research topic: "GENERATION OF ARTIFICIAL DATA IN CLASSIFICATION PROBLEMS WITH UNBALANCED CLASSES", which is in charge of generating data for problems of unbalanced classes making use of the algorithm Oversampling of statistical density proposed in the referenced research.
-
 *******************Autors*******************
 	- Msc. Yordan E. Estrada Rodriguez
 	- Dr. Luis C Méndez González
 	- Dr. Vicente García Jiménez
 	- Dr. Ivan Juan Carlos Pérez Olguín
+	
+*******************Python libraries*******************
+pip install arff
+pip install statistics
+pip install numpy
+pip install rpy2
+pip install matplotlib
+pip install pyqt5
+
+*******************R libraries*******************
+install.packages("fitdistrplus",repos='http://cran.us.r-project.org')
+install.packages("actuar",repos='http://cran.us.r-project.org')
+install.packages("gofstat",repos='http://cran.us.r-project.org')
+
+
+
+*******************Acerca de*******************
+El sistema generador de datos artificiales constituye un resultado del tema de investigación: "GENERACIÓN DE DATOS ARTIFICIALES EN PROBLEMAS DE CLASIFICACIÓN CON CLASES NO BALANCEADAS", el cual se encarga de la generación de datos para problemas de clases no balanceadas haciendo uso del algorítmo Sobremuestreo de densidad estadística propuesto en la investigación referenciada.
+
+*******************About*******************
+The artificial data generator system is a result of the research topic: "GENERATION OF ARTIFICIAL DATA IN CLASSIFICATION PROBLEMS WITH UNBALANCED CLASSES", which is in charge of generating data for problems of unbalanced classes making use of the algorithm Oversampling of statistical density proposed in the referenced research.
 
 
 
