@@ -226,6 +226,16 @@ class Ui_MainWindow(QMainWindow):
         msg.exec_()
 
     def functionGenerarDatos(self):
+        model = self.listView.model()
+        if model is None:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText(_[lang]['no_file_aviable_text'])
+            msg.setWindowTitle(_[lang]['information'])
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            return
+
         if self.save_folder is None:
             dialog = QFileDialog(self)
             dialog.setFileMode(QFileDialog.DirectoryOnly)
@@ -235,8 +245,6 @@ class Ui_MainWindow(QMainWindow):
                 return
 
         self.lbl.show()
-        model = self.listView.model()
-
         for i in range(model.rowCount()):
             fdata = u.load_data(model.index(i).data())
             fixed_data, data_type, round_to = u.rows_to_columns(fdata[fdata['min']])
@@ -585,7 +593,17 @@ class DetailDialog(QDialog):
             _[lang]['selection_criteria1'].format(self.criteria),
             _[lang]['majority_class_contains'].format(len(fdata[fdata['max']])),
             _[lang]['minority_class_contains'].format(len(fdata[fdata['min']])),
+            '---------------' + _[lang]['details'] + '---------------',
         ]
+        i = 1
+        for v in selected_distribution:
+            if "ad" in v:
+                text = '{0} {1}, Anderson-Darling: {2}, Kolmogorov-Smirnov: {3}, Cramer-von-Mises: {4}'.format(_[lang]['column'], i, np.round(v['ad'], 4), np.round(v['ks'], 4), np.round(v['cvm'], 4))
+            else:
+                text = '{0} {1}, {2}'.format(_[lang]['column'], i, v['dist'][0])
+            listed.append(text)
+            i += 1
+
         listModel.setStringList(listed)
 
     @staticmethod

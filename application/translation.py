@@ -39,10 +39,12 @@ tr = {
            'total_registry': 'Total de registros: {}',
            'total_columns': 'Total de columnas: {}',
            'test': 'Prueba: {}',
+           'repeated_value': 'Repetido: {}',
            'majority_class_contains': 'Clase mayoritaria contiene {} elementos',
            'minority_class_contains': 'Clase minoritaria contiene {} elementos',
            'comma_separated_files': 'Archivos separados por coma (*.csv)',
-           'average': 'Promedio'
+           'average': 'Promedio',
+           'no_file_aviable_text': 'Debe seleccionar un archivo para generar sus datos.'
        },
     'en': {'delete_file': 'Delete file',
            'add_files': 'Add files',
@@ -83,9 +85,11 @@ tr = {
            'total_registry': 'Total records: {}',
            'total_columns': 'Total columns: {}',
            'test': 'Test: {}',
+           'repeated_value': 'Repeated: {}',
            'majority_class_contains': 'Majority class contains {} elements',
            'minority_class_contains': 'Minority class contains {} elements',
            'comma_separated_files': 'Comma-Separated Files (*.csv)',
-           'average': 'Average'
+           'average': 'Average',
+           'no_file_aviable_text': 'You must select a file to generate the data.'
        }
 }

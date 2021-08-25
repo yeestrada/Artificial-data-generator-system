@@ -257,6 +257,8 @@ def getDistributionInfo(fixed_data, data_type, difference_umbral, test, criteria
         if repeated is None:
             selected = selectAIC(values, difference_umbral, test, criteria)
             selected_values.append(selected)
+        else:
+            selected_values.append({'dist': (_[lang]['repeated_value'].format(repeated),)})
 
     return selected_values
 
