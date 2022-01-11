@@ -59,7 +59,7 @@ tr = {
            'generate_data': 'Generate data',
            'about_text': "This system constitutes a result of the research topic: '{0}' of the authors:\n{1}".format(
                                         "GENERATION OF ARTIFICIAL DATA IN CLASSIFICATION PROBLEMS WITH UNBALANCED CLASSES",
-                                        "- Ing. Yordan E. Estrada Rodriguez\n"
+                                        "- Msc. Yordan E. Estrada Rodriguez\n"
                                         "- Dr. Luis C Méndez González\n"
                                         "- Dr. Vicente García Jiménez\n"
                                         "- Dr. Ivan Juan Carlos Pérez Olguín"),
