@@ -619,7 +619,7 @@ class DetailDialog(QDialog):
     def on_click(self, item):
         fdata = u.load_data(self.file)
 
-        col_data, t, round = u.rows_to_columns(fdata['all'])
+        col_data, t, round = u.rows_to_columns(fdata[fdata['min']])
         data = np.array(col_data[0]).astype(np.float)
 
         i, col, colors = 1, 0, ["red", "green", "blue", "yellow", "pink", "black", "orange",
