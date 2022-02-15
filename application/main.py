@@ -1,4 +1,9 @@
 import matplotlib.pyplot as plt
+
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
+
 import numpy as np
 import os
 
@@ -537,15 +542,37 @@ class DetailDialog(QDialog):
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
         self.tableView = QTableView(self)
+        self.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableView.setMaximumSize(QSize(16777215, 80))
         self.tableView.setObjectName("tableView")
         self.verticalLayout.addWidget(self.tableView)
+
+        self.hlayout = QHBoxLayout(self)
+
+        self.vlayout_details = QVBoxLayout(self)
         self.label_2 = QLabel(self)
         self.label_2.setObjectName("label_2")
-        self.verticalLayout.addWidget(self.label_2)
+        self.vlayout_details.addWidget(self.label_2)
+        # self.verticalLayout.addWidget(self.label_2)
         self.listView = QListView(self)
         self.listView.setObjectName("listView")
-        self.verticalLayout.addWidget(self.listView)
+        self.listView.setFixedWidth(400)
+        # self.verticalLayout.addWidget(self.listView)
+        self.vlayout_details.addWidget(self.listView)
+
+        self.hlayout.addLayout(self.vlayout_details)
+
+        self.vlayout_plot = QVBoxLayout(self)
+        label_3 = QLabel(self)
+        label_3.setObjectName("label_3")
+        self.figure = Figure()
+        self.canvas = FigureCanvas(self.figure)
+        self.toolbar = NavigationToolbar(self.canvas, self)
+        self.vlayout_plot.addWidget(self.toolbar)
+        self.vlayout_plot.addWidget(self.canvas)
+
+        self.hlayout.addLayout(self.vlayout_plot)
+        self.verticalLayout.addLayout(self.hlayout)
 
         self.tableView.verticalHeader().hide()
 
@@ -553,6 +580,8 @@ class DetailDialog(QDialog):
         self.label_2.setText(_[lang]['details'])
 
         self.dialogShown.connect(self.handleDialogShown)
+
+        self.tableView.clicked.connect(self.on_click)
 
         # OK and Cancel buttons
         buttons = QDialogButtonBox(
@@ -562,6 +591,51 @@ class DetailDialog(QDialog):
         buttons.rejected.connect(self.reject)
         self.verticalLayout.addWidget(buttons)
         self.setLayout(self.verticalLayout)
+
+    def start_draw(self):
+        fdata = u.load_data(self.file)
+        print('**************************************')
+        col_data, t, round = u.rows_to_columns(fdata['all'])
+
+        i, col, colors = 1, 0, ["red", "green", "blue", "yellow", "pink", "black", "orange",
+                                "purple", "beige", "brown", "gray", "cyan", "magenta"]
+
+        self.figure.clear()
+        ax = self.figure.add_subplot(111)
+        ax.clear()
+
+        for points in col_data:
+            ax.scatter(range(len(points)),
+                        points,
+                        color=colors[col],
+                        label="Columna {0}".format(i+1))
+            col = col + 1 if col < len(colors) - 1 else 0
+            i += 1
+
+        self.figure.gca().axes.yaxis.set_ticklabels([])
+        self.figure.legend().remove()
+        self.canvas.draw()
+
+    def on_click(self, item):
+        fdata = u.load_data(self.file)
+
+        col_data, t, round = u.rows_to_columns(fdata['all'])
+        data = np.array(col_data[0]).astype(np.float)
+
+        i, col, colors = 1, 0, ["red", "green", "blue", "yellow", "pink", "black", "orange",
+                                "purple", "beige", "brown", "gray", "cyan", "magenta"]
+
+        self.figure.clear()
+        ax = self.figure.add_subplot(111)
+        ax.clear()
+        col = item.column() if item.column() < len(colors) - 1 else item.column() - len(colors)
+        ax.scatter(range(len(col_data[item.column()])),
+                    col_data[item.column()],
+                    color=colors[col],
+                    label="Columna {0}".format(item.column()+1))
+        self.figure.gca().axes.yaxis.set_ticklabels([])
+        self.figure.legend(loc='upper left')
+        self.canvas.draw()
 
     def handleDialogShown(self):
         self.process(self.file)
@@ -609,6 +683,7 @@ class DetailDialog(QDialog):
     @staticmethod
     def getDetail(file, lbl, test, criteria, parent=None):
         dialog = DetailDialog(file, lbl, parent, test, criteria)
+        dialog.start_draw()
         result = dialog.exec_()
         return result == QDialog.Accepted
 
