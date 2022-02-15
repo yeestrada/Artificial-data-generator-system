@@ -7,9 +7,9 @@ if not exist %install_folder% (
     mkdir %install_folder%
 )
 
-if not exist "C:\Program Files\R\R-4.1.1\bin\R.exe" (
+if not exist "C:\Program Files\R\R-4.1.0\bin\R.exe" (
 	ECHO DESCARGANDO ARCHIVO INSTALADOR DE R
-	bitsadmin.exe /transfer "R" https://cran.r-project.org/bin/windows/base/R-4.1.1-win.exe %install_folder%\R.exe
+	bitsadmin.exe /transfer "R" https://cran.r-project.org/bin/windows/base/old/4.1.0/R-4.1.0-win.exe %install_folder%\R.exe
 	ECHO INICIANDO INSTALADOR DE R
 	%install_folder%\R.exe InstallAllUsers=1 Include_launcher=0 Include_test=0 SimpleInstall=1
 )ELSE ( ECHO PROGRAMA R INSTALADO PREVIAMENTE)
@@ -40,7 +40,7 @@ ECHO INSTALANDO LIBRERIAS R
 echo install.packages("fitdistrplus",repos='http://cran.us.r-project.org')> %install_folder%\library_install.r
 echo install.packages("actuar",repos='http://cran.us.r-project.org')>> %install_folder%\library_install.r
 echo install.packages("gofstat",repos='http://cran.us.r-project.org')>> %install_folder%\library_install.r
-"C:\Program Files\R\R-4.1.1\bin\Rscript.exe" %install_folder%\library_install.r
+"C:\Program Files\R\R-4.1.0\bin\Rscript.exe" %install_folder%\library_install.r
 
 ECHO MOVIENDO CLASES DEL SISTEMA
 if exist %install_folder% ( 
