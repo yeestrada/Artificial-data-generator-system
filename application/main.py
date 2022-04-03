@@ -27,7 +27,7 @@ class Ui_MainWindow(QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(858, 599)
-        MainWindow.setWindowIcon(QIcon("img/app.png"))
+        MainWindow.setWindowIcon(QIcon("C:/SDO/img/app.png"))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
@@ -155,7 +155,7 @@ class Ui_MainWindow(QMainWindow):
         self.listView.customContextMenuRequested.connect(self.myListWidgetContext)
 
         self.lbl = QLabel(self)
-        self.movie = QMovie("img/loader.gif")
+        self.movie = QMovie("C:/SDO/img/loader.gif")
         self.lbl.setMovie(self.movie)
         self.verticalLayout_3.addWidget(self.lbl)
         self.movie.start()
